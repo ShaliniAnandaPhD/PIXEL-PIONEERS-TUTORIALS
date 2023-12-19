@@ -28,5 +28,5 @@ We welcome all engineers, from beginners to seasoned professionals, to join our 
 - Suggest or present a paper for discussion.
 - Provide feedback and suggestions to improve our community.
 
-Let's build and grow together in the realm of technology! 🌟👨‍💻👩‍💻🚀
+Let's build and grow together! 🌟👨‍💻👩‍💻🚀
 
