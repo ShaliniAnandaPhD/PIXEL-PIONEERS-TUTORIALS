@@ -1,0 +1,14 @@
+{
+  "name": "ROS Development Environment",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".."
+  },
+  "settings": { },
+  "extensions": [
+    "ms-iot.vscode-ros"
+  ],
+  "forwardPorts": [ ],
+  "postCreateCommand": "echo 'ROS development environment setup complete!'"
+}
+
