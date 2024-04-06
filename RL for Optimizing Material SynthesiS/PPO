@@ -1,0 +1,35 @@
+# Reinforcement Learning in Material Synthesis Optimization
+
+This simulation bridges the advanced domains of materials science and artificial intelligence, particularly through the lens of reinforcement learning (RL). It offers an interactive environment to explore how RL can be leveraged to fine-tune the conditions under which materials are synthesized, aiming for optimal properties such as hardness and conductivity.
+
+## Understanding RL in This Context
+
+Reinforcement Learning (RL) is a branch of machine learning where an agent learns to make decisions by interacting with an environment to achieve a goal. In the context of material synthesis, the RL agent's objective is to discover the optimal set of synthesis parameters that result in materials with desired properties.
+
+### The RL Framework
+
+- **Agent**: In our simulation, the RL agent represents the decision-making system that iterates over various synthesis conditions.
+- **Environment**: The environment is the simulated world of material synthesis, providing feedback on the synthesized material's properties based on the agent's actions.
+- **States**: Each state represents a specific set of material properties and synthesis conditions at a given time.
+- **Actions**: Actions are the possible adjustments the agent can make to the synthesis parameters.
+- **Rewards**: Rewards are given based on how close the synthesized material's properties are to the desired targets.
+
+### Core Features
+
+- **Interactive Controls**: Allows you to set desired material properties, offering a hands-on experience with the optimization process.
+- **Real-Time Visualization**: Utilizes Plotly for dynamic visualization of the agent's decision-making and the evolving material properties.
+- **Step-by-Step Engagement**: Offers a granular view of the RL optimization process, demonstrating the adjustments made towards achieving the synthesis goals.
+
+## Getting Started
+
+To dive into this simulation:
+
+1. Ensure Python and Streamlit are installed.
+2. Install required libraries: `pip install streamlit plotly numpy`.
+3. Run the simulation: `streamlit run material_synthesis_demo.py`.
+
+The application will open in your browser, ready for an immersive exploration.
+
+## The "Almost Real-Time" Experience
+
+The simulation provides an "almost real-time" view of the optimization process. This design choice allows for interactive and deliberate exploration, making complex RL concepts accessible and engaging for materials researchers. It emphasizes the iterative nature of RL, where each action and its outcome can be scrutinized and understood in detail.
