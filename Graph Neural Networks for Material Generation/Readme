@@ -29,7 +29,7 @@ pip install torch torch-geometric pandas scikit-learn
 
 Dataset
 
-The code assumes that you have the QM9 dataset file (`qm9_dataset.csv`) in the `/content` directory. If your dataset file is located elsewhere, please update the file path in the `load_data` function in `data_utils.py`.
+The code assumes that you have the QM9 dataset file (`qm9_dataset.csv`) in the `/content` directory. If your dataset file is located elsewhere, please update the file path in the `load_data` function in `data_utils.py`. Link is here: https://huggingface.co/datasets/n0w0f/qm9-csv/tree/main
 
 Usage
 
