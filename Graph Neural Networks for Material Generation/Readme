@@ -1,70 +1,82 @@
-```markdown
-# Graph Neural Networks for Material Generation
 
-This repository hosts a project that showcases the use of Graph Neural Networks (GNNs) for the purpose of generating materials with specific desired properties. The project employs the PyTorch and PyTorch Geometric libraries to construct and train a GNN model using the QM9 dataset.
+ Graph Neural Networks for Material Generation
 
-## Overview
+This project demonstrates the implementation of Graph Neural Networks (GNNs) for generating materials with desired properties. The code uses PyTorch and PyTorch Geometric libraries to build and train a GNN model on the QM9 dataset.
 
-The project is organized into three primary Python files:
+Overview
 
-- `model.py`: This file outlines the GNN model's architecture utilizing PyTorch and PyTorch Geometric.
-- `data_utils.py`: This file includes utility functions for the loading and preprocessing of the QM9 dataset.
-- `train.py`: This file contains the implementation for the training loop and evaluation procedures for the GNN model.
+The project consists of three main Python files:
 
-## Installation
+1. `model.py`: Defines the architecture of the GNN model using PyTorch and PyTorch Geometric.
+2. `data_utils.py`: Contains utility functions for loading and preprocessing the QM9 dataset.
+3. `train.py`: Implements the training loop and evaluation of the GNN model.
 
-To execute the project, the following dependencies are required:
+Requirements
 
-- Python (version 3.6 or later)
+To run the code, you need to have the following dependencies installed:
+
+- Python 3.6 or higher
 - PyTorch
 - PyTorch Geometric
 - pandas
 - scikit-learn
 
-These dependencies can be installed via pip using the command below:
+You can install the required packages using pip:
 
-```bash
+
 pip install torch torch-geometric pandas scikit-learn
-```
 
-## Dataset
 
-The project expects the QM9 dataset file named `qm9_dataset.csv` to be located in the `/content` directory. If your dataset is situated in a different location, you should modify the file path accordingly in the `load_data` function within `data_utils.py`.
+Dataset
 
-## Getting Started
+The code assumes that you have the QM9 dataset file (`qm9_dataset.csv`) in the `/content` directory. If your dataset file is located elsewhere, please update the file path in the `load_data` function in `data_utils.py`.
 
-Follow these steps to get started with the project:
+Usage
 
 1. Clone the repository:
-   ```bash
+   
    git clone https://github.com/ShaliniAnandaPhD/PIXEL-PIONEERS-TUTORIALS.git
-   ```
-2. Change to the project directory:
-   ```bash
+   
+
+2. Navigate to the project directory:
+   
    cd PIXEL-PIONEERS-TUTORIALS/Graph Neural Networks for Material Generation
-   ```
-3. Execute the `train.py` script to initiate the model's training process:
-   ```bash
+   
+
+3. Run the `train.py` script to start training the GNN model:
+   
    python train.py
-   ```
+   
 
-This will start the process of loading and preprocessing the QM9 dataset, creating data loaders, defining the GNN model, and commencing the training loop. The console will display updates on the training progress and losses.
+   The script will load the QM9 dataset, preprocess the data, create data loaders, define the GNN model architecture, and start the training loop. The training progress and losses will be displayed in the console.
 
-Upon completion of training, the model will be saved as `material_gnn_model.pth` in the project directory.
+4. After training, the trained model will be saved as `material_gnn_model.pth` in the project directory.
 
-## Project Structure
+Code Explanation
 
-- `model.py`: Defines the `MaterialGNN` class for the GNN model architecture, incorporating two graph convolutional layers, a global mean pooling layer, and a fully connected layer for predictions.
-- `data_utils.py`: Provides the `load_data` function for reading and preprocessing the QM9 dataset, including extraction and preparation of node features and target values.
-- `train.py`: Implements the model training and evaluation, including data loading, model setup, loss function, optimizer, and training loop execution. The trained model is saved as `material_gnn_model.pth`.
+- `model.py`:
+  - Defines the `MaterialGNN` class, which represents the GNN model architecture.
+  - The model consists of two graph convolutional layers (`GCNConv`) followed by a global mean pooling layer and a fully connected layer.
+  - The forward pass of the model takes the node features, edge indices, and batch information as input and returns the predicted property values.
 
-## Results
+- `data_utils.py`:
+  - Contains the `load_data` function, which reads the QM9 dataset CSV file and preprocesses the data.
+  - The function extracts the node features and target property values from the dataset.
+  - It creates the edge connectivity assuming fully connected graphs.
+  - The preprocessed data is returned as a PyTorch Geometric `Data` object.
 
-The GNN model trained by this project is capable of predicting material properties from their graph representations. Model performance can be assessed using metrics like mean squared error (MSE) or mean absolute error (MAE) on the test dataset.
+- `train.py`:
+  - Implements the training loop and evaluation of the GNN model.
+  - The `create_data_loaders` function splits the data into training and test sets and creates data loaders for batch processing.
+  - The `train` function performs the training of the GNN model using the training data loader.
+  - The `evaluate` function evaluates the trained model on the test data loader.
+  - The `main` function sets up the device, loads the dataset, creates data loaders, defines the model architecture, loss function, and optimizer, and starts the training loop.
+  - After training, the trained model is saved as `material_gnn_model.pth`.
 
-## License
+Results
 
-This project is made available under the terms of the [MIT License](LICENSE).
-```
+The trained GNN model can be used to predict the properties of materials based on their graph representations. The model's performance can be evaluated using metrics such as mean squared error (MSE) or mean absolute error (MAE) on the test set.
 
-This revised README follows Markdown formatting conventions, organizing the project details into clear, concise sections for ease of understanding and navigation.
+ License
+
+This project is licensed under the [MIT License](LICENSE).
