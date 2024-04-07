@@ -1,0 +1,81 @@
+# Graph Neural Networks for Material Generation
+
+This project demonstrates the implementation of Graph Neural Networks (GNNs) for generating materials with desired properties. The code uses PyTorch and PyTorch Geometric libraries to build and train a GNN model on the QM9 dataset.
+
+## Overview
+
+The project consists of three main Python files:
+
+1. `model.py`: Defines the architecture of the GNN model using PyTorch and PyTorch Geometric.
+2. `data_utils.py`: Contains utility functions for loading and preprocessing the QM9 dataset.
+3. `train.py`: Implements the training loop and evaluation of the GNN model.
+
+## Requirements
+
+To run the code, you need to have the following dependencies installed:
+
+- Python 3.6 or higher
+- PyTorch
+- PyTorch Geometric
+- pandas
+- scikit-learn
+
+You can install the required packages using pip:
+
+```
+pip install torch torch-geometric pandas scikit-learn
+```
+
+## Dataset
+
+The code assumes that you have the QM9 dataset file (`qm9_dataset.csv`) in the `/content` directory. If your dataset file is located elsewhere, please update the file path in the `load_data` function in `data_utils.py`.
+
+## Usage
+
+1. Clone the repository:
+   ```
+   git clone https://github.com/ShaliniAnandaPhD/PIXEL-PIONEERS-TUTORIALS.git
+   ```
+
+2. Navigate to the project directory:
+   ```
+   cd PIXEL-PIONEERS-TUTORIALS/Graph Neural Networks for Material Generation
+   ```
+
+3. Run the `train.py` script to start training the GNN model:
+   ```
+   python train.py
+   ```
+
+   The script will load the QM9 dataset, preprocess the data, create data loaders, define the GNN model architecture, and start the training loop. The training progress and losses will be displayed in the console.
+
+4. After training, the trained model will be saved as `material_gnn_model.pth` in the project directory.
+
+## Code Explanation
+
+- `model.py`:
+  - Defines the `MaterialGNN` class, which represents the GNN model architecture.
+  - The model consists of two graph convolutional layers (`GCNConv`) followed by a global mean pooling layer and a fully connected layer.
+  - The forward pass of the model takes the node features, edge indices, and batch information as input and returns the predicted property values.
+
+- `data_utils.py`:
+  - Contains the `load_data` function, which reads the QM9 dataset CSV file and preprocesses the data.
+  - The function extracts the node features and target property values from the dataset.
+  - It creates the edge connectivity assuming fully connected graphs.
+  - The preprocessed data is returned as a PyTorch Geometric `Data` object.
+
+- `train.py`:
+  - Implements the training loop and evaluation of the GNN model.
+  - The `create_data_loaders` function splits the data into training and test sets and creates data loaders for batch processing.
+  - The `train` function performs the training of the GNN model using the training data loader.
+  - The `evaluate` function evaluates the trained model on the test data loader.
+  - The `main` function sets up the device, loads the dataset, creates data loaders, defines the model architecture, loss function, and optimizer, and starts the training loop.
+  - After training, the trained model is saved as `material_gnn_model.pth`.
+
+## Results
+
+The trained GNN model can be used to predict the properties of materials based on their graph representations. The model's performance can be evaluated using metrics such as mean squared error (MSE) or mean absolute error (MAE) on the test set.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
