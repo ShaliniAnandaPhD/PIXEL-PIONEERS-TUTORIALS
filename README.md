@@ -41,7 +41,6 @@ To get started with the tutorials and projects in this repository, follow these 
 2. Navigate to the project directory of your choice.
 3. Follow the instructions provided in each project's README file.
 
-Sure, here is the table with the first column and first row bolded:
 
 | **Tutorial**                                                                                          | **Objective**                                                                      | **Keywords**                                                   | **Tools Used**                       | **Libraries**                    | **Use Case**                    | **Data and Data Processing**          |
 |------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------|------------------------------------------------------------|-------------------------------------|---------------------------------|-----------------------------------|-----------------------------------|
