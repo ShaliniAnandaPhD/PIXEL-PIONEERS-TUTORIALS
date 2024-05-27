@@ -51,6 +51,14 @@ The Pixel Pioneers Community has developed a wide range of tutorials and project
   - **Description**: Implementing a retrieval evaluator and action trigger for retrieval augmented generation.
   - **File**: `Retrieval_Evaluator_and_Action_Trigger_for_Retrieval_Augmented_Generation.ipynb`
 
+### Multi-Agent Graph Environment (MAGE) for Robotic Control
+
+- **Example Project**: _Coordinated Multi-Robot Exploration and Mapping_
+
+- **Description**: The MAGE framework enables the coordination and collaboration of multiple robots for efficient exploration and mapping of unknown environments. By representing the robot team as a graph, MAGE facilitates information sharing, task allocation, and decision-making among the robots. The framework allows for the integration of various algorithms for path planning, localization, and mapping, enabling the robots to collaboratively build a comprehensive map of the environment while optimizing their exploration strategies.
+
+- **File**: `MAGE_Coordinated_Multi_Robot_Exploration_and_Mapping.py`
+
 ### Interactive Art with AI
 - **Example Project**: *Stability AI Interactive Art: Generate Layered Prompts*
   - **Description**: Generating layered prompts for interactive art using Stability AI.
