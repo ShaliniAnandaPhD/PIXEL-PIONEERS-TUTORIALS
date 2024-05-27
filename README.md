@@ -1,4 +1,4 @@
-# Pixel Pioneers Community Tutorials
+# Pixel Pioneers Tutorials
 
 This repository contains a collection of tutorials and projects created by the Pixel Pioneers Community. Each project focuses on different aspects of machine learning and artificial intelligence.
 
