@@ -113,9 +113,7 @@ Here is the complete and detailed table with information on data and data proces
 | pytorch_agricultural_monitoring.py | Agricultural monitoring using PyTorch | Agricultural Monitoring, PyTorch, Machine Learning | Python | PyTorch | Agriculture | Remote sensing data; preprocessing includes image classification, vegetation index calculation, and anomaly detection using PyTorch |
 | pytorch_archaeological_exploration.py | Archaeological exploration using PyTorch | Archaeological Exploration, PyTorch, Machine Learning | Python | PyTorch | Archaeology | Geospatial data; preprocessing involves terrain analysis, site detection, and predictive modeling using PyTorch |
 | pytorch_construction_site_management.py | Construction site management using PyTorch | Construction Management, PyTorch, Machine Learning | Python | PyTorch | Construction | Site monitoring data; preprocessing includes object detection, progress tracking, and safety analysis using PyTorch |
-| pytorch_dietary_recommendation
-
-_system_nutrition.py | Dietary recommendation system using PyTorch | Dietary Recommendation, Nutrition, PyTorch | Python | PyTorch | Nutrition | Nutritional datasets; preprocessing involves user profiling, recommendation generation, and feedback analysis using PyTorch |
+| pytorch_dietary_recommendation_system_nutrition.py | Dietary recommendation system using PyTorch | Dietary Recommendation, Nutrition, PyTorch | Python | PyTorch | Nutrition | Nutritional datasets; preprocessing involves user profiling, recommendation generation, and feedback analysis using PyTorch |
 | pytorch_disaster_response.py | Disaster response using PyTorch | Disaster Response, PyTorch, Machine Learning | Python | PyTorch | Disaster Management | Emergency response data; preprocessing includes incident detection, resource allocation, and predictive modeling using PyTorch |
 | pytorch_environmental_monitoring.py | Environmental monitoring using PyTorch | Environmental Monitoring, PyTorch, Machine Learning | Python | PyTorch | Environmental Science | Sensor data; preprocessing involves data aggregation, anomaly detection, and trend analysis using PyTorch |
 | pytorch_industrial_inspection.py | Industrial inspection using PyTorch | Industrial Inspection, PyTorch, Machine Learning | Python | PyTorch | Industry | Inspection data; preprocessing includes defect detection, classification, and reporting using PyTorch |
@@ -146,6 +144,10 @@ _system_nutrition.py | Dietary recommendation system using PyTorch | Dietary Rec
 | tensorflow_smart_irrigation_system_agriculture.py | Smart irrigation system using TensorFlow | Smart Irrigation, Agriculture, TensorFlow | Python | TensorFlow | Agriculture | Irrigation data; preprocessing involves sensor data collection, environmental modeling, and irrigation control using TensorFlow |
 | xgboost_air_quality_forecasting_environmental_science.py | Air quality forecasting using XGBoost | Air Quality, Forecasting, XGBoost | Python | XGBoost | Environmental Science | Air quality data; preprocessing involves feature extraction, model training, and quality prediction using XGBoost |
 | xgboost_food_price_prediction_nutrition.py | Food price prediction using XGBoost | Food Price, Prediction, XGBoost | Python | XGBoost | Nutrition | Food price data; preprocessing involves feature extraction, model training, and price prediction using XGBoost |
+
+---
+
+Feel free to make any further adjustments or add more details as needed.
 
 ---
 
