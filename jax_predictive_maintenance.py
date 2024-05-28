@@ -1,4 +1,6 @@
-# jax_predictive_maintenance.py
+# File name: jax_predictive_maintenance.py
+# File library: JAX, NumPy, Scikit-learn
+# Use case: Predictive Maintenance
 
 import jax
 import jax.numpy as jnp
@@ -8,10 +10,15 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 
 # Define the predictive model
 def jax_predictive_model(inputs, num_features, num_classes):
-    # Define the model architecture
+    # First hidden layer with ReLU activation
     layer1 = jax.nn.relu(jax.numpy.dot(inputs, jax.random.normal(jax.random.PRNGKey(0), (num_features, 64))))
+    
+    # Second hidden layer with ReLU activation
     layer2 = jax.nn.relu(jax.numpy.dot(layer1, jax.random.normal(jax.random.PRNGKey(1), (64, 32))))
+    
+    # Output layer with softmax activation
     outputs = jax.nn.softmax(jax.numpy.dot(layer2, jax.random.normal(jax.random.PRNGKey(2), (32, num_classes))))
+    
     return outputs
 
 # Define the loss function
@@ -87,3 +94,19 @@ print(f"Test F1 Score: {f1:.4f}")
 new_machine_data = np.array([[0.5, 0.1, 0.8, 0.3, 0.2, 0.9, 0.4, 0.7, 0.6, 0.1]])
 predicted_failure = jax_predictive_maintenance(params, new_machine_data)
 print(f"Predicted Failure for New Machine: {predicted_failure[0]}")
+
+# Possible Errors and Solutions:
+# 1. Import Errors:
+#    Error: "ModuleNotFoundError: No module named 'jax'"
+#    Solution: Ensure JAX is properly installed. Use `pip install jax jaxlib` to install it.
+#
+# 2. Shape Mismatch Errors:
+#    Error: "ValueError: shapes (X,Y) and (Y,Z) not aligned"
+#    Solution: Verify the shapes of inputs and weights in matrix multiplication. Adjust dimensions if necessary.
+#
+# 3. Optimization Issues:
+#    Error: "ValueError: gradients must be arrays"
+#    Solution: Ensure that the loss function returns a scalar value for proper gradient computation.
+#
+# 4. Performance Issues:
+#    Solution: Use smaller batch sizes or fewer epochs if the training process is too slow. Consider using GPU for faster computation.
