@@ -5,6 +5,7 @@ import jax.numpy as jnp
 import numpy as np
 from PIL import Image
 from skimage.metrics import peak_signal_noise_ratio, structural_similarity
+import jax.nn
 
 # Define the SRCNN model
 def jax_srcnn(inputs, num_filters):
@@ -105,3 +106,17 @@ output_image.save("high_res_image.png")
 psnr, ssim = jax_evaluate_model(params, jnp.expand_dims(low_res_image / 255.0, axis=0), jnp.expand_dims(high_res_image / 255.0, axis=0))
 print(f"PSNR: {psnr:.2f} dB")
 print(f"SSIM: {ssim:.4f}")
+
+# Possible Errors and Solutions:
+
+# ValueError: operands could not be broadcast together with shapes (x, y) (a, b)
+# Solution: Ensure that the shapes of the predictions and targets match exactly when calculating the loss.
+
+# ImportError: No module named 'PIL'
+# Solution: Ensure the PIL library is installed using `pip install pillow`.
+
+# RuntimeError: Invalid argument: Non-scalable parameters
+# Solution: Ensure all operations in the model are scalable and support JAX's JIT compilation.
+
+# KeyError: 'low_res_image.png'
+# Solution: Ensure the file path and name are correct and the image file exists.
