@@ -1,4 +1,6 @@
-# jax_siamese_object_tracking.py
+# File name: jax_siamese_object_tracking.py
+# File library: JAX, NumPy, Flax, Optax, OpenCV
+# Use case: Object Tracking with Siamese Network
 
 import jax
 import jax.numpy as jnp
@@ -64,13 +66,13 @@ def generate_pairs(frames, num_pairs):
     labels = []
     for _ in range(num_pairs):
         if np.random.rand() < 0.5:
-            # Positive pair
+            # Positive pair (same frame, different patches)
             frame_idx = np.random.randint(len(frames))
             patch1 = frames[frame_idx, :128, :128, :]
             patch2 = frames[frame_idx, 128:, 128:, :]
             label = 1
         else:
-            # Negative pair
+            # Negative pair (different frames)
             frame_idx1, frame_idx2 = np.random.choice(len(frames), size=2, replace=False)
             patch1 = frames[frame_idx1, :128, :128, :]
             patch2 = frames[frame_idx2, 128:, 128:, :]
@@ -146,3 +148,16 @@ template = frames[0, :128, :128, :]
 # Perform object tracking on a new video
 tracking_video_path = "path/to/your/tracking_video.mp4"
 track_object(model, state.params, template, tracking_video_path)
+
+# Possible errors and solutions:
+# 1. OpenCV video file not found:
+#    Error: "error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'"
+#    Solution: Ensure the video file path is correct and the file exists.
+
+# 2. Shape mismatch errors during training:
+#    Error: "ValueError: operands could not be broadcast together with shapes..."
+#    Solution: Check the shapes of the inputs and labels to ensure they are compatible. Use appropriate reshaping or padding if necessary.
+
+# 3. Slow training or convergence issues:
+#    Solution: Experiment with different learning rates, batch sizes, or network architectures. Use a smaller model or fewer parameters if the training is too slow.
+
