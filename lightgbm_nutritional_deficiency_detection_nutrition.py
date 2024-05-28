@@ -1,5 +1,4 @@
-# File name: lightgbm_nutritional_deficiency_detection_nutrition.py
-# File library: LightGBM, Pandas, Scikit-learn
+
 # Use case: Nutrition - Nutritional Deficiency Detection
 
 import pandas as pd
