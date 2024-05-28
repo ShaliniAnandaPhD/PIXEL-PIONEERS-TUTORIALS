@@ -20,7 +20,7 @@ class WasteCollectionEnv(gym.Env):
     
     def reset(self):
         self.current_step = 0
-        self.waste_levels = self.waste_data['Waste Level'].values
+        self.waste_levels = self.waste_data['Waste Level'].values.copy()
         return self.waste_levels
     
     def step(self, action):
@@ -75,3 +75,20 @@ while not done:
     action, _ = model.predict(obs)
     obs, _, done, _ = new_env.step(action)
     print(f"Collected waste from {new_waste_data['Location'][action]}")
+
+# Possible Errors and Solutions:
+
+# AttributeError: 'WasteCollectionEnv' object has no attribute 'waste_levels'
+# Solution: Ensure that `self.waste_levels` is correctly initialized in the `reset` method and updated in the `step` method.
+
+# ValueError: Shape of the input to "Box" is not compatible with the environment.
+# Solution: Verify the shape of the observation space in `self.observation_space` to match the actual shape of the input data.
+
+# IndexError: index out of bounds
+# Solution: Ensure that the `action` taken is within the valid range defined by `self.action_space`.
+
+# ImportError: No module named 'stable_baselines3'
+# Solution: Ensure that the Stable Baselines3 library is installed using `pip install stable-baselines3`.
+
+# TypeError: 'NoneType' object is not subscriptable
+# Solution: Check that the `predict` method of the model returns a valid action and not `None`.
