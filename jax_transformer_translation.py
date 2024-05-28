@@ -8,7 +8,6 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 
 # Define the transformer model
 def jax_transformer(inputs, targets, num_layers, d_model, num_heads, dff, input_vocab_size, target_vocab_size, dropout_rate):
-    # Positional encoding
     def positional_encoding(pos, d_model):
         angles = jnp.arange(d_model)[:, np.newaxis] / jnp.power(10000, (2 * (jnp.arange(d_model) // 2)) / d_model)
         angles = pos * angles
@@ -16,7 +15,6 @@ def jax_transformer(inputs, targets, num_layers, d_model, num_heads, dff, input_
         angles[:, 1::2] = jnp.cos(angles[:, 1::2])
         return angles
 
-    # Multi-head attention
     def multi_head_attention(q, k, v, mask):
         attention_scores = jnp.matmul(q, jnp.transpose(k, (0, 2, 1))) / jnp.sqrt(d_model)
         if mask is not None:
@@ -25,7 +23,6 @@ def jax_transformer(inputs, targets, num_layers, d_model, num_heads, dff, input_
         output = jnp.matmul(attention_weights, v)
         return output
 
-    # Encoder layer
     def encoder_layer(inputs, mask):
         attention_output = multi_head_attention(inputs, inputs, inputs, mask)
         attention_output = jax.nn.dropout(attention_output, rate=dropout_rate)
@@ -38,7 +35,6 @@ def jax_transformer(inputs, targets, num_layers, d_model, num_heads, dff, input_
         
         return ffn_output
 
-    # Decoder layer
     def decoder_layer(inputs, enc_outputs, mask):
         attention_output = multi_head_attention(inputs, inputs, inputs, mask)
         attention_output = jax.nn.dropout(attention_output, rate=dropout_rate)
@@ -55,7 +51,6 @@ def jax_transformer(inputs, targets, num_layers, d_model, num_heads, dff, input_
         
         return ffn_output
 
-    # Encoder
     def encoder(inputs, mask):
         inputs = jax.nn.embedding(inputs, d_model, input_vocab_size)
         inputs *= jnp.sqrt(d_model)
@@ -67,7 +62,6 @@ def jax_transformer(inputs, targets, num_layers, d_model, num_heads, dff, input_
         
         return inputs
 
-    # Decoder
     def decoder(inputs, enc_outputs, mask):
         inputs = jax.nn.embedding(inputs, d_model, target_vocab_size)
         inputs *= jnp.sqrt(d_model)
@@ -80,7 +74,6 @@ def jax_transformer(inputs, targets, num_layers, d_model, num_heads, dff, input_
         outputs = jax.nn.dense(inputs, target_vocab_size)
         return outputs
 
-    # Transformer
     enc_inputs = inputs
     dec_inputs = targets[:, :-1]
     dec_outputs_real = targets[:, 1:]
@@ -98,13 +91,11 @@ def jax_loss_fn(params, inputs, targets, num_layers, d_model, num_heads, dff, in
 
 # Tokenize and preprocess the data
 def preprocess_data(english_sentences, french_sentences, max_length):
-    # Tokenize English sentences
     english_tokenizer = Tokenizer(filters='')
     english_tokenizer.fit_on_texts(english_sentences)
     english_sequences = english_tokenizer.texts_to_sequences(english_sentences)
     english_sequences = pad_sequences(english_sequences, maxlen=max_length, padding='post')
     
-    # Tokenize French sentences
     french_tokenizer = Tokenizer(filters='')
     french_tokenizer.fit_on_texts(french_sentences)
     french_sequences = french_tokenizer.texts_to_sequences(french_sentences)
@@ -186,3 +177,17 @@ params = jax_train(params, optimizer, train_data, num_epochs=10, batch_size=2, n
 sentence = "I enjoy coding with JAX."
 translated_sentence = jax_translate(params, sentence, english_tokenizer, french_tokenizer, max_length, num_layers=2, d_model=128, num_heads=8, dff=512, dropout_rate=0.1)
 print("Translated sentence:", translated_sentence)
+
+# Possible Errors and Solutions:
+
+# ValueError: operands could not be broadcast together with shapes (x, y) (a, b)
+# Solution: Ensure that the shapes of the predictions and targets match exactly when calculating the loss.
+
+# ImportError: No module named 'tensorflow.keras.preprocessing.text'
+# Solution: Ensure TensorFlow is installed using `pip install tensorflow`.
+
+# IndexError: list index out of range
+# Solution: Verify that the indices used in operations are within the valid range of the data structures being accessed.
+
+# RuntimeError: Invalid argument: Non-scalable parameters
+# Solution: Ensure all operations in the model are scalable and support JAX's JIT compilation.
