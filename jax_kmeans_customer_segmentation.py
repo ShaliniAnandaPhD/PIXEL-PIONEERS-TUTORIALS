@@ -61,3 +61,13 @@ print(f"Average Silhouette Score: {silhouette_avg:.3f}")
 # Print the cluster assignments for each customer
 for i in range(num_samples):
     print(f"Customer {i+1} belongs to Cluster {cluster_assignments[i]+1}")
+
+# Possible Errors and Solutions:
+# 1. ValueError: If the number of clusters is greater than the number of samples, the initialization will fail.
+#    Solution: Ensure that the number of clusters is less than the number of samples.
+
+# 2. Convergence Issues: If the number of iterations is too low, the algorithm might not converge.
+#    Solution: Increase the number of iterations to ensure convergence.
+
+# 3. NaNs in Data: NaNs in the input data can cause errors in distance calculations.
+#    Solution: Handle NaNs by removing or imputing them before clustering.
