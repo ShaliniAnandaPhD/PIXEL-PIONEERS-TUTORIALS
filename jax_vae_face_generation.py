@@ -5,52 +5,39 @@ import jax.numpy as jnp
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Simulated dataset of face images
+# Simulate a dataset of face images
 def generate_face_dataset(num_samples):
-    # Generate random face images (simulated)
-    faces = np.random.rand(num_samples, 64, 64, 3)
+    faces = np.random.rand(num_samples, 64, 64, 3)  # Random face images
     return faces
 
 # Define the encoder network
 def encoder(inputs):
-    # Flatten the input image
-    x = jnp.reshape(inputs, (inputs.shape[0], -1))
-    # Encoder hidden layer
-    x = jax.nn.relu(jax.nn.dense(x, 512))
-    # Encoder output layers for mean and log-variance
-    mean = jax.nn.dense(x, 128)
-    log_var = jax.nn.dense(x, 128)
+    x = jnp.reshape(inputs, (inputs.shape[0], -1))  # Flatten the input image
+    x = jax.nn.relu(jax.nn.dense(x, 512))  # Hidden layer
+    mean = jax.nn.dense(x, 128)  # Output layer for mean
+    log_var = jax.nn.dense(x, 128)  # Output layer for log-variance
     return mean, log_var
 
 # Define the decoder network
 def decoder(latent):
-    # Decoder hidden layer
-    x = jax.nn.relu(jax.nn.dense(latent, 512))
-    # Decoder output layer
-    x = jax.nn.sigmoid(jax.nn.dense(x, 64*64*3))
-    # Reshape the output to the original image shape
-    output = jnp.reshape(x, (x.shape[0], 64, 64, 3))
+    x = jax.nn.relu(jax.nn.dense(latent, 512))  # Hidden layer
+    x = jax.nn.sigmoid(jax.nn.dense(x, 64*64*3))  # Output layer
+    output = jnp.reshape(x, (x.shape[0], 64, 64, 3))  # Reshape to image
     return output
 
 # Define the VAE model
 def vae(inputs):
-    # Encode the input image
-    mean, log_var = encoder(inputs)
-    # Sample latent variables from the encoded distribution
-    latent = mean + jnp.exp(0.5 * log_var) * jax.random.normal(jax.random.PRNGKey(0), mean.shape)
-    # Decode the latent variables to generate the output image
-    output = decoder(latent)
+    mean, log_var = encoder(inputs)  # Encode the input image
+    latent = mean + jnp.exp(0.5 * log_var) * jax.random.normal(jax.random.PRNGKey(0), mean.shape)  # Sample latent variables
+    output = decoder(latent)  # Decode the latent variables
     return output, mean, log_var
 
 # Define the loss function
 def vae_loss(inputs):
     output, mean, log_var = vae(inputs)
-    # Reconstruction loss
-    reconstruction_loss = jnp.mean(jnp.square(output - inputs))
-    # KL divergence loss
-    kl_loss = -0.5 * jnp.mean(1 + log_var - jnp.square(mean) - jnp.exp(log_var))
-    # Total VAE loss
-    total_loss = reconstruction_loss + kl_loss
+    reconstruction_loss = jnp.mean(jnp.square(output - inputs))  # Reconstruction loss
+    kl_loss = -0.5 * jnp.mean(1 + log_var - jnp.square(mean) - jnp.exp(log_var))  # KL divergence loss
+    total_loss = reconstruction_loss + kl_loss  # Total VAE loss
     return total_loss
 
 # Train the VAE model
@@ -85,7 +72,7 @@ for epoch in range(num_epochs):
         optimizer, loss = train_step(optimizer, batch_faces)
         epoch_loss += loss
     epoch_loss /= (len(faces) // batch_size)
-    print(f"Epoch {epoch+1}, Loss: {epoch_loss}")
+    print(f"Epoch {epoch+1}, Loss: {epoch_loss:.4f}")
 
 # Generate new faces
 num_generated_faces = 5
@@ -99,3 +86,17 @@ for i in range(num_generated_faces):
     axes[i].axis('off')
 plt.tight_layout()
 plt.show()
+
+# Possible Errors and Solutions:
+
+# ValueError: operands could not be broadcast together with shapes (x, y) (a, b)
+# Solution: Ensure that the shapes of the predictions and targets match exactly when calculating the loss.
+
+# ImportError: No module named 'jax'
+# Solution: Ensure JAX is installed using `pip install jax`.
+
+# TypeError: only integer scalar arrays can be converted to a scalar index
+# Solution: Ensure that array indexing and slicing operations are correctly implemented.
+
+# RuntimeError: Invalid argument: Non-scalable parameters
+# Solution: Ensure all operations in the model are scalable and support JAX's JIT compilation.
