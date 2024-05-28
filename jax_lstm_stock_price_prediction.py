@@ -1,5 +1,3 @@
-# jax_lstm_stock_price_prediction.py
-
 import jax
 import jax.numpy as jnp
 import numpy as np
@@ -8,18 +6,19 @@ from sklearn.preprocessing import MinMaxScaler
 
 # Define the LSTM model
 def jax_lstm_model(inputs, hidden_size, num_layers):
+    # Define a simple LSTM model with two layers
     lstm_cell = jax.experimental.stax.serial(
         jax.experimental.stax.LSTM(hidden_size),
         jax.experimental.stax.LSTM(hidden_size)
     )
     outputs, _ = jax.lax.scan(lstm_cell, inputs)
-    outputs = jax.nn.dense(outputs[-1], 1)
+    outputs = jax.nn.dense(outputs[-1], 1)  # Predict the next value in the sequence
     return outputs
 
 # Define the loss function
 def jax_loss_fn(params, inputs, targets):
     predictions = jax_lstm_model(inputs, hidden_size=64, num_layers=2)
-    loss = jnp.mean(jax.lax.square(predictions - targets))
+    loss = jnp.mean(jax.lax.square(predictions - targets))  # Mean squared error loss
     return loss
 
 # Prepare the data
@@ -50,13 +49,13 @@ def jax_predict(params, X_test):
     return predictions
 
 # Example usage
-data = pd.read_csv('stock_prices.csv')
+data = pd.read_csv('stock_prices.csv')  # Load stock price data
 prices = data['Close'].values.reshape(-1, 1)
 
 scaler = MinMaxScaler(feature_range=(0, 1))
-scaled_prices = scaler.fit_transform(prices)
+scaled_prices = scaler.fit_transform(prices)  # Normalize the data
 
-lookback = 30
+lookback = 30  # Number of previous days to consider for predicting the next day
 X, y = prepare_data(scaled_prices, lookback)
 
 train_size = int(len(X) * 0.8)
@@ -75,3 +74,25 @@ predictions = scaler.inverse_transform(predictions)
 
 print("Actual prices:", scaler.inverse_transform(y_test.reshape(-1, 1)))
 print("Predicted prices:", predictions)
+
+# Possible Errors and Solutions:
+
+# 1. Import Errors:
+#    Error: "ModuleNotFoundError: No module named 'jax'"
+#    Solution: Ensure JAX and other required libraries are properly installed. Use `pip install jax jaxlib`.
+
+# 2. Data Preparation Errors:
+#    Error: "IndexError: index out of bounds"
+#    Solution: Ensure that the lookback period is appropriate for the dataset size.
+
+# 3. Shape Mismatch Errors:
+#    Error: "ValueError: shapes (X,Y) and (Y,Z) not aligned"
+#    Solution: Verify the shapes of inputs and weights in matrix multiplication. Adjust dimensions if necessary.
+
+# 4. Gradient Issues:
+#    Error: "ValueError: gradients must be arrays"
+#    Solution: Ensure that the loss function returns a scalar value for proper gradient computation.
+
+# 5. Performance Issues:
+#    Solution: Use smaller batch sizes or fewer epochs if the training process is too slow. Consider using GPU for faster computation.
+
