@@ -147,3 +147,9 @@ for image in sample_images:
     caption = generate_caption(state.params, image[jnp.newaxis, ...], max_length=20)
     caption_text = " ".join([vocab_inv[token] for token in caption if token not in [0, 1, 2]])
     print("Generated Caption:", caption_text)
+
+# Possible Errors and Solutions:
+# 1. Missing Vocabulary: Ensure the vocabulary includes all tokens in the captions.
+# 2. Dimension Mismatch: Verify the dimensions of inputs and outputs in the model.
+# 3. Gradient Issues: Check for NaNs in gradients and use gradient clipping if necessary.
+# 4. Training Instability: Adjust learning rate or batch size to stabilize training.
