@@ -29,7 +29,8 @@ data = pd.DataFrame({
 
 # Preprocess the data
 data['Ingredient_Count'] = data['Meal'].apply(lambda x: len(x.split(', ')))
-data = pd.concat([data, pd.get_dummies(data['Meal'].str.join(', ').str.get_dummies(', '))], axis=1)
+ingredient_dummies = data['Meal'].str.get_dummies(', ')
+data = pd.concat([data, ingredient_dummies], axis=1)
 data.drop(['Meal'], axis=1, inplace=True)
 
 # Split the data into features and target variables
@@ -83,8 +84,12 @@ print("Carbohydrates - R-squared:", r2_score(y_carbohydrates_test, y_carbohydrat
 new_meals = ['apple, banana, spinach, chicken', 'rice, beef, carrot', 'pasta, bread, egg']
 new_data = pd.DataFrame({'Meal': new_meals})
 new_data['Ingredient_Count'] = new_data['Meal'].apply(lambda x: len(x.split(', ')))
-new_data = pd.concat([new_data, pd.get_dummies(new_data['Meal'].str.join(', ').str.get_dummies(', '))], axis=1)
+ingredient_dummies_new = new_data['Meal'].str.get_dummies(', ')
+new_data = pd.concat([new_data, ingredient_dummies_new], axis=1)
 new_data.drop(['Meal'], axis=1, inplace=True)
+
+# Align new data with the training data
+new_data = new_data.reindex(columns=X.columns, fill_value=0)
 
 # Estimate nutritional values for new meals
 new_calories = rf_calories.predict(new_data)
@@ -99,3 +104,21 @@ for i in range(len(new_meals)):
     print(f"  Estimated Protein: {new_protein[i]:.2f}")
     print(f"  Estimated Fat: {new_fat[i]:.2f}")
     print(f"  Estimated Carbohydrates: {new_carbohydrates[i]:.2f}")
+
+# Possible Errors and Solutions:
+
+# ValueError: Shapes of passed values are (x, y), indices imply (a, b)
+# Solution: Ensure that the DataFrame operations align correctly. Verify the shapes and dimensions of the DataFrames during concatenation and reindexing.
+
+# KeyError: 'Meal'
+# Solution: Verify that the 'Meal' column exists in the DataFrame before performing operations. Use `data.head()` to inspect the data.
+
+# NotFittedError: This RandomForestRegressor instance is not fitted yet. Call 'fit' with appropriate arguments before using this estimator.
+# Solution: Ensure the Random Forest models are trained by calling `fit()` before making predictions.
+
+# ImportError: No module named 'pandas'
+# Solution: Ensure the Pandas library is installed using `pip install pandas`.
+
+# ValueError: Input contains NaN, infinity or a value too large for dtype('float64').
+# Solution: Check for and handle any missing or infinite values in the dataset before training the models.
+
