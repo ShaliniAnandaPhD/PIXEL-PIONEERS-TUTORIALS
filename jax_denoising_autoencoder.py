@@ -28,9 +28,9 @@ class Autoencoder(nn.Module):
         # Decoder
         x = nn.Dense(7 * 7 * 64)(x)
         x = x.reshape((x.shape[0], 7, 7, 64))
-        x = nn.Conv(64, kernel_size=(3, 3), transpose=True, strides=(2, 2), padding='SAME')(x)
+        x = nn.ConvTranspose(64, kernel_size=(3, 3), strides=(2, 2), padding='SAME')(x)
         x = nn.relu(x)
-        x = nn.Conv(32, kernel_size=(3, 3), transpose=True, strides=(2, 2), padding='SAME')(x)
+        x = nn.ConvTranspose(32, kernel_size=(3, 3), strides=(2, 2), padding='SAME')(x)
         x = nn.relu(x)
         x = nn.Conv(1, kernel_size=(3, 3), padding='SAME')(x)
         x = nn.sigmoid(x)
@@ -121,3 +121,20 @@ axes[1].set_title('Denoised Image')
 axes[1].axis('off')
 plt.tight_layout()
 plt.show()
+
+# Possible Errors and Solutions:
+
+# 1. ImportError: No module named 'flax'.
+#    Solution: Ensure you have the flax library installed. Use `pip install flax`.
+
+# 2. AttributeError: module 'jax.nn' has no attribute 'ConvTranspose'.
+#    Solution: Ensure that you are using the correct API. For transpose convolutions, use `nn.ConvTranspose` from Flax.
+
+# 3. ValueError: operands could not be broadcast together with shapes.
+#    Solution: Check the shapes of your input data and model parameters to ensure they are compatible.
+
+# 4. FileNotFoundError: No such file or directory: 'mnist'.
+#    Solution: Ensure that the dataset is available and correctly loaded. You might need to download it using the `datasets` library.
+
+# 5. TypeError: 'DeviceArray' object is not callable.
+#    Solution: Ensure that all operations involving JAX arrays are correctly implemented using JAX functions.
