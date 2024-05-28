@@ -66,6 +66,9 @@ The Pixel Pioneers Community has developed a wide range of tutorials and project
   - **Description**: Generating layered prompts for interactive art using Stability AI.
   - **File**: `Stability_AI_Interactive_Art_generate_layered_prompts.ipynb`
 
+## Growing Food on Mars usin Python
+- This is a class I taught in 2022 for high school seniors
+
 Please find details of the different tutorials in the repository and some more information on them as it relates to the objective of the project, tools and libriaries used and details regarding data processing
 
 | Tutorial | Objective | Keywords | Tools Used | Libraries | Use Case | Data and Data Processing |
