@@ -33,7 +33,7 @@ data = pd.DataFrame({
     'Fraud': fraud
 })
 
-# Preprocess the data
+# Preprocess the data by encoding categorical variables
 data = pd.get_dummies(data, columns=['Gender', 'Smoker', 'Region'])
 
 # Split the data into features and target
@@ -50,7 +50,7 @@ rf_classifier.fit(X_train, y_train)
 # Make predictions on the test set
 y_pred = rf_classifier.predict(X_test)
 
-# Evaluate the model
+# Evaluate the model using accuracy, precision, recall, and F1-score
 accuracy = accuracy_score(y_test, y_pred)
 precision = precision_score(y_test, y_pred)
 recall = recall_score(y_test, y_pred)
@@ -77,6 +77,24 @@ new_claims = pd.DataFrame({
     'Charges': [8500, 12000, 9800]
 })
 
+# Make predictions for the new claims
 fraud_predictions = rf_classifier.predict(new_claims)
 print("Fraud Predictions:")
 print(fraud_predictions)
+
+# Possible Errors and Solutions:
+
+# ValueError: could not convert string to float
+# Solution: Ensure all numeric columns are correctly converted to numerical types using `pd.to_numeric()` if necessary.
+
+# KeyError: 'Gender'
+# Solution: Verify that the 'Gender' column exists in the DataFrame before preprocessing. Use `data.head()` to check the column names.
+
+# NotFittedError: This RandomForestClassifier instance is not fitted yet. Call 'fit' with appropriate arguments before using this estimator.
+# Solution: Ensure the classifier is trained by calling `fit()` before making predictions.
+
+# ImportError: No module named 'pandas'
+# Solution: Ensure the Pandas library is installed using `pip install pandas`.
+
+# ValueError: Shapes of passed values is (x, y), indices imply (a, b)
+# Solution: Check the alignment of DataFrame operations and ensure the shapes of data structures are compatible.
