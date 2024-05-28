@@ -1,5 +1,4 @@
-# File name: solar_energy_prediction_simulated.py
-# File library: TensorFlow, Pandas, Scikit-learn
+
 # Use case: Renewable Energy
 
 import tensorflow as tf
