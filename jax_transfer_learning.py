@@ -96,3 +96,18 @@ for epoch in range(num_epochs):
     print(f"Epoch {epoch + 1}:")
     print(f"  Training Loss: {metrics['loss']:.4f}, Training Accuracy: {metrics['accuracy']:.4f}")
     print(f"  Validation Loss: {eval_loss:.4f}, Validation Accuracy: {eval_accuracy:.4f}")
+
+# Possible Errors and Solutions:
+
+# ValueError: operands could not be broadcast together with shapes (x, y) (a, b)
+# Solution: Ensure that the shapes of the predictions and targets match exactly when calculating the loss.
+
+# ImportError: No module named 'transformers'
+# Solution: Ensure the transformers library is installed using `pip install transformers`.
+
+# RuntimeError: Invalid argument: Non-scalable parameters
+# Solution: Ensure all operations in the model are scalable and support JAX's JIT compilation.
+
+# KeyError: 'img'
+# Solution: Make sure the dataset is correctly preprocessed and the feature keys match the expected format.
+
