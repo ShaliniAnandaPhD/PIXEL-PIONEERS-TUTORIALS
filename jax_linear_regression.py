@@ -1,4 +1,3 @@
-# jax_linear_regression.py
 
 import jax
 import jax.numpy as jnp
@@ -65,3 +64,17 @@ r2 = r2_score(targets_test, predictions_test)
 
 print(f"Test MSE: {mse:.4f}")
 print(f"Test R^2: {r2:.4f}")
+
+# Possible Errors and Solutions:
+
+# 1. ValueError: If there are NaN values in the dataset, you might get a ValueError.
+#    Solution: Ensure that your dataset does not contain NaN values by using `np.nan_to_num` or similar preprocessing steps.
+
+# 2. Dimension Mismatch: If the dimensions of weights or features do not align, an error will occur.
+#    Solution: Check the shapes of your arrays to ensure they are correct, especially after splitting the data.
+
+# 3. Convergence Issues: If the learning rate is too high, the model may not converge and result in a high loss.
+#    Solution: Reduce the learning rate and observe the change in loss over epochs.
+
+# 4. Memory Issues: For large datasets, you might encounter memory issues.
+#    Solution: Use batch processing or reduce the dataset size.
