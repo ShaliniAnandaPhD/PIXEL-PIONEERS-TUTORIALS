@@ -1,4 +1,6 @@
 # jax_a3c_reinforcement_learning.py
+# Libraries: JAX, Gym, Flax, Optax
+# Use case: Reinforcement Learning - Actor-Critic Method for CartPole Environment
 
 import jax
 import jax.numpy as jnp
@@ -124,3 +126,26 @@ state = jax_utils.unreplicate(state)
 num_eval_episodes = 10
 mean_reward = evaluate(state.params, jax.jit(lambda: gym.make('CartPole-v1')), num_eval_episodes)
 print(f"Mean reward over {num_eval_episodes} episodes: {mean_reward}")
+
+# Possible Errors and Solutions:
+# 1. AttributeError: module 'jax' has no attribute 'jit'.
+#    Solution: Ensure that you have installed the latest version of JAX. Use `pip install --upgrade jax jaxlib`.
+
+# 2. AttributeError: module 'jax.numpy' has no attribute 'exp'.
+#    Solution: Verify your JAX installation. Reinstall if necessary. Use `pip install --upgrade jax jaxlib`.
+
+# 3. TypeError: 'Flax' object is not callable.
+#    Solution: Ensure that you have correctly defined and used the Flax module. Refer to the Flax documentation for proper usage.
+
+# 4. RuntimeError: Resource exhausted: Out of memory.
+#    Solution: Reduce the batch size or the number of agents to fit your available GPU/CPU memory.
+
+# 5. ValueError: Cannot set a Tensor with more than one dimension as an axis for slicing.
+#    Solution: Check your tensor operations and shapes to ensure compatibility.
+
+# Additional Details:
+# - Actor-Critic Method: This method uses separate networks to estimate the policy (actor) and value function (critic).
+# - JAX: JAX is used for high-performance numerical computing and automatic differentiation.
+# - Flax: Flax is a neural network library for JAX.
+# - Optax: Optax provides gradient processing and optimization algorithms for JAX.
+
