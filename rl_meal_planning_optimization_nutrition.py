@@ -83,8 +83,8 @@ for _ in range(num_episodes):
         obs, reward, done, _ = env.step(action)
         episode_reward += reward
     total_reward += episode_reward
-    print(f"Episode Reward: {episode_reward}")
-print(f"Average Reward: {total_reward / num_episodes}")
+    print(f"Episode Reward: {episode_reward:.2f}")
+print(f"Average Reward: {total_reward / num_episodes:.2f}")
 
 # Optimize meal planning
 optimized_plan = env.reset()
@@ -99,3 +99,20 @@ print(f"Total Calories: {env.total_calories}")
 print(f"Total Protein: {env.total_protein}")
 print(f"Total Fat: {env.total_fat}")
 print(f"Total Carbs: {env.total_carbs}")
+
+# Possible Errors and Solutions:
+
+# AttributeError: 'MealPlanningEnv' object has no attribute 'selected_meals'
+# Solution: Ensure that `self.selected_meals` is correctly initialized in the `reset` method and updated in the `step` method.
+
+# ValueError: Shape of the input to "Box" is not compatible with the environment.
+# Solution: Verify the shape of the observation space in `self.observation_space` to match the actual shape of the input data.
+
+# IndexError: index out of bounds
+# Solution: Ensure that the `action` taken is within the valid range defined by `self.action_space`.
+
+# ImportError: No module named 'stable_baselines3'
+# Solution: Ensure that the Stable Baselines3 library is installed using `pip install stable-baselines3`.
+
+# TypeError: 'NoneType' object is not subscriptable
+# Solution: Check that the `predict` method of the model returns a valid action and not `None`.
