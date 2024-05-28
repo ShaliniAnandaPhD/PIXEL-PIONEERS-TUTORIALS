@@ -1,7 +1,3 @@
-# File name: computer_vision_diet_monitoring_nutrition.py
-# File library: OpenCV, TensorFlow, Keras
-# Use case: Nutrition - Diet Monitoring
-
 import cv2
 import numpy as np
 from tensorflow.keras.applications.mobilenet_v2 import MobileNetV2, preprocess_input
@@ -19,7 +15,10 @@ cap = cv2.VideoCapture(0)
 while True:
     # Read a frame from the video capture
     ret, frame = cap.read()
-    
+    if not ret:
+        print("Failed to grab frame")
+        break
+
     # Preprocess the frame
     resized_frame = cv2.resize(frame, (224, 224))
     normalized_frame = preprocess_input(img_to_array(resized_frame))
@@ -42,3 +41,21 @@ while True:
 # Release the video capture and close windows
 cap.release()
 cv2.destroyAllWindows()
+
+# Possible Errors and Solutions:
+
+# 1. Error: "Failed to grab frame"
+#    Solution: Ensure the camera is properly connected and accessible. If using a laptop, ensure the webcam is not being used by another application.
+
+# 2. Error: "ValueError: could not broadcast input array from shape (224,224,3) into shape (224,224)"
+#    Solution: Ensure the input frame is correctly resized to the expected dimensions (224x224) and has three color channels.
+
+# 3. Error: "ModuleNotFoundError: No module named 'cv2'"
+#    Solution: Ensure OpenCV is installed. Use `pip install opencv-python-headless` to install it.
+
+# 4. Error: "ModuleNotFoundError: No module named 'tensorflow'"
+#    Solution: Ensure TensorFlow and Keras are installed. Use `pip install tensorflow` to install it.
+
+# 5. Error: "IndexError: list index out of range"
+#    Solution: Ensure the `food_classes` list is correctly defined and matches the output classes of the model.
+
