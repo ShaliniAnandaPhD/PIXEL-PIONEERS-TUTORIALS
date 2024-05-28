@@ -1,9 +1,7 @@
-#  jax_nutritional_content_prediction_explicit_diff.py
-
 # Import necessary libraries
 import jax
 import jax.numpy as jnp
-from jax import jit, jacfwd, jacrev
+from jax import jit, jacrev
 from jax.experimental import stax
 from jax.experimental.stax import Dense, Relu
 import numpy as np
@@ -41,7 +39,7 @@ def loss_fn(params, inputs, targets):
 @jit
 def update(params, inputs, targets, learning_rate):
     grads = jacrev(loss_fn)(params, inputs, targets)
-    return jax.tree_util.tree_multimap(lambda p, g: p - learning_rate * g, params, grads)
+    return jax.tree_util.tree_map(lambda p, g: p - learning_rate * g, params, grads)
 
 # Training settings
 num_epochs = 100
@@ -86,3 +84,20 @@ def predict(params, inputs):
 new_input = np.array([[5, 3, 2, 1, 4, 2, 0, 1]])  # Replace with actual input features
 predicted_nutrition = predict(init_params, new_input)
 print(f"Predicted Nutrition: {predicted_nutrition}")
+
+"""
+Possible Errors and Solutions:
+
+1. ValueError: If there are NaN values in the dataset, you might get a ValueError.
+   Solution: Ensure that your dataset does not contain NaN values by using `np.nan_to_num` or similar preprocessing steps.
+
+2. Dimension Mismatch: If the dimensions of weights or features do not align, an error will occur.
+   Solution: Check the shapes of your arrays to ensure they are correct, especially after splitting the data.
+
+3. Convergence Issues: If the learning rate is too high, the model may not converge and result in a high loss.
+   Solution: Reduce the learning rate and observe the change in loss over epochs.
+
+4. Memory Issues: For large datasets, you might encounter memory issues.
+   Solution: Use batch processing or reduce the dataset size.
+"""
+
