@@ -91,3 +91,17 @@ plt.ylabel('Sensor 2')
 plt.title('Wind Turbine Fault Detection')
 plt.legend()
 plt.show()
+
+# Possible Errors and Solutions:
+
+# RuntimeError: Expected object of scalar type Float but got scalar type Double
+# Solution: Ensure all NumPy arrays are converted to `dtype=np.float32` before converting to PyTorch tensors.
+
+# ValueError: Target size (torch.Size([x])) must be the same as input size (torch.Size([y, z]))
+# Solution: Ensure that the shape of the labels matches the shape of the predictions. Typically, labels should be a 1D tensor with the same length as the number of samples.
+
+# ImportError: No module named 'torch'
+# Solution: Ensure PyTorch is installed using `pip install torch`.
+
+# UserWarning: Using a target size (torch.Size([x])) that is different to the input size (torch.Size([y, z])).
+# Solution: Ensure the loss function's input dimensions match the expected output dimensions of the model.
