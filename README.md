@@ -2,6 +2,8 @@
 
 This repository contains a collection of tutorials and projects created by the Pixel Pioneers Community. Each project focuses on different aspects of machine learning and artificial intelligence.
 
+Files will be modified and updated continuously as projects are often revisited with new methods when relevant new papers are released. 
+
 ## Projects
 
 The Pixel Pioneers Community has developed a wide range of tutorials and projects that span various tools, techniques, and use cases in machine learning and artificial intelligence. Below are some highlighted categories and examples of the projects within them:
