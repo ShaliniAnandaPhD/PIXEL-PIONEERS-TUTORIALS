@@ -3,13 +3,12 @@
 # Import necessary libraries
 import jax
 import jax.numpy as jnp
-from jax import grad, jit, vmap, random
+from jax import grad, jit, random
 from jax.experimental import stax
 from jax.experimental.stax import Dense, Relu
 import numpy as np
 
 # Simulate data
-# For demonstration purposes, let's simulate some example data
 np.random.seed(42)
 X_train = np.random.rand(100, 8)  # 100 samples, 8 features
 y_train = np.random.rand(100, 4)  # 100 samples, 4 targets (calories, proteins, carbs, fats)
@@ -41,7 +40,7 @@ def loss_fn(params, inputs, targets):
 @jit
 def update(params, inputs, targets, learning_rate):
     grads = grad(loss_fn)(params, inputs, targets)
-    return jax.tree_util.tree_multimap(lambda p, g: p - learning_rate * g, params, grads)
+    return jax.tree_util.tree_map(lambda p, g: p - learning_rate * g, params, grads)
 
 # Custom transformation for batch normalization
 def custom_batch_norm(x, mean, var, beta, gamma, eps=1e-5):
@@ -66,10 +65,6 @@ for epoch in range(num_epochs):
         X_batch = X_train[i:i+batch_size]
         y_batch = y_train[i:i+batch_size]
 
-        # Update parameters
-        init_params = update(init_params, X_batch, y_batch, learning_rate)
-        batch_loss = loss_fn(init_params, X_batch, y_batch)
-
         # Apply custom batch normalization
         mean = jnp.mean(X_batch, axis=0)
         var = jnp.var(X_batch, axis=0)
@@ -77,6 +72,9 @@ for epoch in range(num_epochs):
         gamma = jnp.ones_like(var)
         X_batch = custom_batch_norm(X_batch, mean, var, beta, gamma)
 
+        # Update parameters
+        init_params = update(init_params, X_batch, y_batch, learning_rate)
+        batch_loss = loss_fn(init_params, X_batch, y_batch)
         epoch_loss += batch_loss
         num_batches += 1
 
@@ -98,3 +96,13 @@ def predict(params, inputs):
 new_input = np.array([[5, 3, 2, 1, 4, 2, 0, 1]])  # Replace with actual input features
 predicted_nutrition = predict(init_params, new_input)
 print(f"Predicted Nutrition: {predicted_nutrition}")
+
+# Possible Errors and Solutions:
+# 1. ValueError: If the input data contains NaN or infinite values, it may cause errors in training.
+#    Solution: Ensure the input data is cleaned and contains no NaN or infinite values.
+
+# 2. Dimension Mismatch: If the dimensions of input features or targets do not match the expected dimensions, an error will occur.
+#    Solution: Verify the dimensions of your input data and targets before training.
+
+# 3. Convergence Issues: If the learning rate is too high, the model may not converge.
+#    Solution: Decrease the learning rate and try again.
