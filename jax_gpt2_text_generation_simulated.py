@@ -1,17 +1,13 @@
-# jax_gpt2_text_generation_simulated.py
-
-# Import the necessary libraries
 import jax
 import jax.numpy as jnp
 import numpy as np
-import transformers
 from transformers import GPT2Tokenizer, FlaxGPT2LMHeadModel
 
-# Simulated pre-trained GPT-2 tokenizer and model
+# Simulated pre-trained GPT-2 tokenizer
 class SimulatedGPT2Tokenizer:
     def __init__(self):
         self.vocab = {
-            "<|endoftext|>": 0,
+            "": 0,
             "the": 1,
             "future": 2,
             "of": 3,
@@ -25,7 +21,7 @@ class SimulatedGPT2Tokenizer:
     
     def encode(self, text, return_tensors="jax"):
         tokens = text.split()
-        input_ids = [self.vocab[token] for token in tokens]
+        input_ids = [self.vocab.get(token, 0) for token in tokens]
         return jnp.array(input_ids)
     
     def decode(self, input_ids, skip_special_tokens=True):
@@ -33,6 +29,7 @@ class SimulatedGPT2Tokenizer:
         decoded_text = " ".join(decoded_tokens)
         return decoded_text
 
+# Simulated pre-trained GPT-2 model
 class SimulatedFlaxGPT2LMHeadModel:
     def __init__(self):
         self.weights = jnp.array([
@@ -87,3 +84,21 @@ for i, text in enumerate(generated_text):
     print(f"Generated Text {i+1}:")
     print(text)
     print()
+
+# Possible Errors and Solutions:
+
+# 1. Error: "KeyError" during tokenization
+#    Solution: Ensure the tokenizer vocabulary contains all tokens in the input text.
+#              You may need to expand the vocabulary for a more realistic simulation.
+
+# 2. Error: "IndexError" during decoding
+#    Solution: Verify that the input IDs are correctly mapped to tokens in the vocabulary.
+#              Ensure that the decoding process does not encounter out-of-range indices.
+
+# 3. Error: "ValueError" during generation
+#    Solution: Check the shapes and values of the generated logits and probabilities.
+#              Ensure that the softmax function receives valid input and the probabilities sum to 1.
+
+# 4. Error: "TypeError" with JAX operations
+#    Solution: Verify the data types and shapes of JAX arrays. Use jnp.array() to ensure compatibility.
+
