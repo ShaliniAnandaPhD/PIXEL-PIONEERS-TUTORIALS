@@ -1,5 +1,4 @@
-# File name: gpt4_healthy_recipe_generation_nutrition.py
-# File library: OpenAI GPT-4, Transformers
+
 # Use case: Nutrition - Healthy Recipe Generation
 
 import openai
