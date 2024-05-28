@@ -75,3 +75,21 @@ predicted_prices = model.predict(new_data)
 print("Predicted Prices:")
 for i, price in enumerate(predicted_prices):
     print(f"{new_data['Date'][i]}: {price:.2f}")
+
+# Possible Errors and Solutions:
+
+# 1. KeyError: 'Date'
+#    Solution: Ensure that the 'Date' column exists in the data before processing. Use `data.head()` to check the column names.
+
+# 2. ValueError: could not convert string to float
+#    Solution: Check for any non-numeric values in the columns that are expected to be numeric. Use `data.info()` to inspect the data types.
+
+# 3. XGBoostError: feature_names mismatch
+#    Solution: Ensure that the training and new data have the same feature names and order. Verify that the preprocessing steps are applied consistently.
+
+# 4. IndexError: index out of bounds
+#    Solution: Ensure that the 'Date' column is present in `new_data` when printing the predicted prices. Use `new_data.columns` to check.
+
+# 5. ModuleNotFoundError: No module named 'xgboost'
+#    Solution: Ensure that the XGBoost library is installed. Use `pip install xgboost`.
+
