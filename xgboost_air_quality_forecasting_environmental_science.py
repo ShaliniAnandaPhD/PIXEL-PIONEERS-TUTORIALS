@@ -55,3 +55,21 @@ new_data = pd.DataFrame({
 })
 aqi_forecast = model.predict(new_data)
 print("Forecasted AQI:", aqi_forecast)
+
+# Possible Errors and Solutions:
+
+# KeyError: 'AQI'
+# Solution: Ensure that the 'AQI' column exists in the data before processing. Use `data.head()` to check the column names.
+
+# ValueError: could not convert string to float
+# Solution: Check for any non-numeric values in the columns that are expected to be numeric. Use `data.info()` to inspect the data types.
+
+# XGBoostError: feature_names mismatch
+# Solution: Ensure that the training and new data have the same feature names and order. Verify that the preprocessing steps are applied consistently.
+
+# IndexError: index out of bounds
+# Solution: Ensure that the 'PM2.5', 'NO2', 'SO2', and 'CO' columns are present in `new_data` when making predictions. Use `new_data.columns` to check.
+
+# ModuleNotFoundError: No module named 'xgboost'
+# Solution: Ensure that the XGBoost library is installed. Use `pip install xgboost`.
+
