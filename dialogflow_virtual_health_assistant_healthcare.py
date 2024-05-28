@@ -1,5 +1,3 @@
-# File name: dialogflow_virtual_health_assistant_healthcare.py
-# File library: Dialogflow, Pandas, NumPy
 # Use case: Healthcare - AI-Powered Virtual Health Assistant
 
 import dialogflow_v2 as dialogflow
