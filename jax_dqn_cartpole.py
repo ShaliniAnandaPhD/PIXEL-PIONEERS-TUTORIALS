@@ -1,5 +1,3 @@
-# jax_dqn_cartpole.py
-
 import jax
 import jax.numpy as jnp
 import numpy as np
@@ -9,6 +7,17 @@ import random
 
 # Define the Q-network
 def jax_q_network(states, num_actions, hidden_size):
+    """
+    Q-network model to predict Q-values for given states.
+
+    Parameters:
+    states (jax.numpy.DeviceArray): The input states
+    num_actions (int): Number of possible actions
+    hidden_size (int): Number of units in the hidden layer
+
+    Returns:
+    jax.numpy.DeviceArray: Q-values for each action
+    """
     x = jax.nn.dense(states, hidden_size)
     x = jax.nn.relu(x)
     q_values = jax.nn.dense(x, num_actions)
@@ -16,6 +25,21 @@ def jax_q_network(states, num_actions, hidden_size):
 
 # Define the loss function
 def jax_loss_fn(params, states, actions, rewards, next_states, dones, gamma):
+    """
+    Compute the loss for Q-network.
+
+    Parameters:
+    params (dict): Model parameters
+    states (jax.numpy.DeviceArray): Batch of states
+    actions (jax.numpy.DeviceArray): Batch of actions
+    rewards (jax.numpy.DeviceArray): Batch of rewards
+    next_states (jax.numpy.DeviceArray): Batch of next states
+    dones (jax.numpy.DeviceArray): Batch of done flags
+    gamma (float): Discount factor
+
+    Returns:
+    jax.numpy.DeviceArray: Computed loss
+    """
     q_values = jax_q_network(states, num_actions=2, hidden_size=128)
     next_q_values = jax_q_network(next_states, num_actions=2, hidden_size=128)
     
@@ -29,12 +53,37 @@ def jax_loss_fn(params, states, actions, rewards, next_states, dones, gamma):
 # Experience replay buffer
 class ReplayBuffer:
     def __init__(self, capacity):
+        """
+        Initialize the replay buffer.
+
+        Parameters:
+        capacity (int): Maximum size of the buffer
+        """
         self.buffer = deque(maxlen=capacity)
     
     def push(self, state, action, reward, next_state, done):
+        """
+        Add experience to the buffer.
+
+        Parameters:
+        state (numpy.ndarray): Current state
+        action (int): Action taken
+        reward (float): Reward received
+        next_state (numpy.ndarray): Next state
+        done (bool): Whether the episode is done
+        """
         self.buffer.append((state, action, reward, next_state, done))
     
     def sample(self, batch_size):
+        """
+        Sample a batch of experiences from the buffer.
+
+        Parameters:
+        batch_size (int): Number of experiences to sample
+
+        Returns:
+        tuple: Batch of states, actions, rewards, next states, and done flags
+        """
         experiences = random.sample(self.buffer, batch_size)
         states, actions, rewards, next_states, dones = zip(*experiences)
         return np.array(states), np.array(actions), np.array(rewards), np.array(next_states), np.array(dones)
@@ -44,6 +93,22 @@ class ReplayBuffer:
 
 # Train the agent
 def jax_train(env, params, optimizer, replay_buffer, num_episodes, batch_size, gamma, epsilon):
+    """
+    Train the DQN agent.
+
+    Parameters:
+    env (gym.Env): The environment
+    params (dict): Model parameters
+    optimizer (jax.experimental.optimizers.Optimizer): Optimizer
+    replay_buffer (ReplayBuffer): Experience replay buffer
+    num_episodes (int): Number of episodes to train
+    batch_size (int): Batch size for training
+    gamma (float): Discount factor
+    epsilon (float): Exploration rate
+
+    Returns:
+    dict: Trained model parameters
+    """
     for episode in range(num_episodes):
         state = env.reset()
         done = False
@@ -105,3 +170,20 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# Possible Errors and Solutions:
+
+# 1. ImportError: No module named 'gym'.
+#    Solution: Ensure that you have the gym library installed. Use `pip install gym`.
+
+# 2. TypeError: 'DeviceArray' object is not callable.
+#    Solution: Ensure that all operations involving JAX arrays are correctly implemented using JAX functions.
+
+# 3. ValueError: operands could not be broadcast together with shapes.
+#    Solution: Check the dimensions of your input data and model parameters to ensure they are compatible.
+
+# 4. AttributeError: module 'jax.nn' has no attribute 'dense'.
+#    Solution: Make sure you are using the correct syntax for defining dense layers. You might need to implement custom dense layers if not using Flax.
+
+# 5. IndexError: index out of bounds.
+#    Solution: Check the action selection logic and ensure valid actions are chosen within the range defined by the environment.
