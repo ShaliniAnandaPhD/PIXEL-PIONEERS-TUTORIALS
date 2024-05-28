@@ -164,3 +164,20 @@ while not done:
 print(f"Evaluation Reward: {np.sum(rewards)}")
 
 env.close()
+
+# Possible Errors and Solutions:
+# 1. Import Errors:
+#    Error: "ModuleNotFoundError: No module named 'jax'"
+#    Solution: Ensure JAX and other required libraries are properly installed. Use `pip install jax jaxlib flax optax gym`.
+
+# 2. Shape Mismatch Errors:
+#    Error: "ValueError: shapes (X,Y) and (Y,Z) not aligned"
+#    Solution: Verify the shapes of inputs and weights in matrix multiplication. Adjust dimensions if necessary.
+
+# 3. Gradient Issues:
+#    Error: "ValueError: gradients must be arrays"
+#    Solution: Ensure that the loss function returns a scalar value for proper gradient computation.
+
+# 4. Performance Issues:
+#    Solution: Use smaller batch sizes or fewer epochs if the training process is too slow. Consider using GPU for faster computation.
+
