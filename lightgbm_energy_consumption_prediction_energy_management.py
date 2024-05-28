@@ -1,5 +1,4 @@
-# File name: lightgbm_energy_consumption_prediction_energy_management.py
-# File library: LightGBM, Pandas, Scikit-learn
+
 # Use case: Energy Management - Energy Consumption Prediction
 
 import numpy as np
